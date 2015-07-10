@@ -1,1021 +1,860 @@
 ﻿1
 00:00:00,390 --> 00:00:03,149
-okay we are ready to tackle validation
+ Итак, мы готовы решать проверки 
 
 2
 00:00:03,149 --> 00:00:07,040
-which is pretty fun so if I switch over
-to articles controller
+ который является довольно весело, так что если я перейти на контроллере статьи 
 
 3
 00:00:07,040 --> 00:00:10,410
-this is where we left off the only
-difference
+ это где мы остановились только разницу 
 
 4
 00:00:10,410 --> 00:00:14,440
-is that I've added some doc locks to the
-various methods this is a good habit to
+ является то, что я добавил некоторые документирующие замки различных методов это хорошая привычка 
 
 5
 00:00:14,439 --> 00:00:15,080
-get into
+ попасть в 
 
 6
 00:00:15,080 --> 00:00:18,800
-and locally if you do something like
-peach be storm they can automate this
+ и локально, если вы что-то сделать, как персик быть гроза они могут автоматизировать 
 
 7
 00:00:18,800 --> 00:00:19,689
-process
+ процесс 
 
 8
 00:00:19,689 --> 00:00:22,859
-alright so let's head down to the store
-method
+ Хорошо так давайте голову к методу магазине 
 
 9
 00:00:22,859 --> 00:00:26,680
-this is what we need to focus on so if
-you remember
+ это то, что мы должны сосредоточиться на, так что если вы помните, 
 
 10
 00:00:26,679 --> 00:00:29,868
-in its current state we could submit
-this form
+ в его текущем состоянии мы могли бы представить эту форму 
 
 11
 00:00:29,868 --> 00:00:35,390
-and no error would be thrown we try it
-and a new role has been entered into the
+ и ошибок не будет брошен мы стараемся его и новая роль была введена в 
 
 12
 00:00:35,390 --> 00:00:36,439
-database table
+ Таблица базы данных 
 
 13
 00:00:36,439 --> 00:00:39,519
-and were echoing it out but there's
-nothing there
+ и были эхом его, но там ничего нет 
 
 14
 00:00:39,520 --> 00:00:43,520
-this is a very bad thing so instead
-we're gonna leverage
+ это очень плохо, так вместо этого мы собираемся рычаги 
 
 15
 00:00:43,520 --> 00:00:47,550
-validation to ensure that the sorts of
-things never happen
+ проверка, чтобы гарантировать, что виды вещей не бывает 
 
 16
 00:00:47,549 --> 00:00:50,558
-so let's tackle that now but real quick
+ так что давайте решать, что сейчас, но очень быстро 
 
 17
 00:00:50,558 --> 00:00:54,140
-let's do a select star from articles and
-I'm getting to lead
+ давайте сделаем выберите звезду из статей, и я получаю, чтобы привести 
 
 18
 00:00:54,140 --> 00:00:57,520
-from articles where the ID Eagle 7
+ из статей, где ID Орел 7 
 
 19
 00:00:57,520 --> 00:01:01,329
-just to start from scratch okay let's
-get into it
+ просто начать с нуля в порядке, давайте попасть в него 
 
 20
 00:01:01,329 --> 00:01:05,079
-now many show you two different ways to
-handle this one
+ сейчас многие показать вам два разных способа справиться с этой одной 
 
 21
 00:01:05,079 --> 00:01:08,519
-is through using what we call a former
-Qwest class
+ через используя то, что мы называем первый класс Qwest 
 
 22
 00:01:08,519 --> 00:01:12,759
-an object this is really nice for more
-complex validation
+ Объект это действительно хорошо для более сложных проверки 
 
 23
 00:01:12,760 --> 00:01:15,859
-but you also have things where it's very
-simple
+ но вы также есть вещи, где это очень просто 
 
 24
 00:01:15,859 --> 00:01:19,269
-you just wanna make sure that the user
-does fill out a fielder to
+ вы просто хотите убедиться, что пользователь не заполнить Филдер к 
 
 25
 00:01:19,269 --> 00:01:22,500
-and then you can continue and for those
-situations
+ а затем вы можете продолжить и в тех ситуациях, 
 
 26
 00:01:22,500 --> 00:01:26,489
-we can take advantage perpetrate that
-where bill includes by default
+ мы можем воспользоваться совершить что там, где законопроект включает в себя по умолчанию 
 
 27
 00:01:26,489 --> 00:01:30,530
-so let's start with former quests as you
-can imagine
+ так что давайте начнем с бывшими квестов, как вы можете себе представить, 
 
 28
 00:01:30,530 --> 00:01:34,829
-we have a generator for that so higher
-and peach PR dicen
+ у нас есть генератор для этого так и высшего персик PR dicen 
 
 29
 00:01:34,828 --> 00:01:38,408
-and we scroll up you'll see this section
-right here make
+ и мы прокрутку вверх, вы увидите этот раздел здесь сделать 
 
 30
 00:01:38,409 --> 00:01:43,040
-request now think these classes as a way
-for the user
+ Запрос теперь думаю эти классы как способ для пользователя 
 
 31
 00:01:43,040 --> 00:01:46,320
-to make some kind of request for your
-application
+ чтобы какой-то просьбе для вашего приложения 
 
 32
 00:01:46,319 --> 00:01:49,658
-whether it's signing up or upgrading
-their subscription
+ будь то подписание или обновление подписку 
 
 33
 00:01:49,659 --> 00:01:52,680
-or in this case creating a new article
+ или в данном случае создания новой статьи 
 
 34
 00:01:52,680 --> 00:01:56,649
-so what we try this out make a new
-former Qwest
+ так, что мы попробовать это сделать новый бывшего Qwest 
 
 35
 00:01:56,649 --> 00:02:00,570
-and we could call it create article or
-publish article
+ и мы могли бы назвать это создать статью или опубликовать статью 
 
 36
 00:02:00,569 --> 00:02:04,398
-or schedule whatever sorta terminology
-your business uses
+ или запланировать любой удобной Сорта терминология свои бизнес-использования 
 
 37
 00:02:04,399 --> 00:02:08,989
-in this case a simple credit approach is
-fine now a lot of people will
+ в этом случае просто кредит подход отлично теперь много людей будет 
 
 38
 00:02:08,989 --> 00:02:12,430
-add request to the end as a suffix you
-can do that
+ добавить запрос до конца в качестве суффикса можно сделать, что 
 
 39
 00:02:12,430 --> 00:02:15,689
-you can leave it off it's up to you will
-keep it on here though
+ Вы можете оставить его, это до вас, будет держать его здесь, хотя 
 
 40
 00:02:15,689 --> 00:02:20,150
-and that's it so now we will switch back
+ и это его, так что теперь мы будем вернуться 
 
 41
 00:02:20,150 --> 00:02:23,260
-and if I open up ap HTTP
+ и если я открываю AP HTTP 
 
 42
 00:02:23,259 --> 00:02:26,560
-requests this is where those classes
-will be added
+ просит это, где будут добавлены эти классы 
 
 43
 00:02:26,560 --> 00:02:30,409
-man this looks a little confusing at
-first but actually it's very
+ Человек это выглядит немного запутанным на первый, но на самом деле это очень 
 
 44
 00:02:30,409 --> 00:02:34,299
-very simple so we have two different
-methods here authorize
+ очень просто, поэтому мы иметь два различных метода здесь разрешить 
 
 45
 00:02:34,300 --> 00:02:38,769
-in roles the first one is Dez the user
-have permission
+ В ролях Первый Дез пользователь имеет разрешения 
 
 46
 00:02:38,769 --> 00:02:41,980
-to perform this kind of request or
-action
+ для выполнения такой просьбы или действия 
 
 47
 00:02:41,979 --> 00:02:45,500
-here's an example what if somebody was
-trying to
+ вот пример того, что если кто-то пытался 
 
 48
 00:02:45,500 --> 00:02:48,949
-edit a comment that they didn't create
-well
+ редактировать комментарий, что они не создают хорошо 
 
 49
 00:02:48,949 --> 00:02:52,238
-of course we don't want to allow that
-John cannot
+ Конечно, мы не хотим, чтобы что Джон не может 
 
 50
 00:02:52,239 --> 00:02:55,920
-added a comment that was created by
-chain this
+ добавил комментарий, который был создан цепи этого 
 
 51
 00:02:55,919 --> 00:02:59,589
-is where we can and that sort of logic
-now in our case we don't even really
+ где мы можем и что-то логики в настоящее время в нашем случае мы даже не действительно 
 
 52
 00:02:59,590 --> 00:03:01,530
-have a membership system setup
+ есть настройки системы членства 
 
 53
 00:03:01,530 --> 00:03:04,890
-somebody said that a true anyone can
-make this request
+ кто-то сказал, что правда кто-то может сделать этот запрос 
 
 54
 00:03:04,889 --> 00:03:08,158
-currently next we have our rules
+ В настоящее время рядом у нас есть правила 
 
 55
 00:03:08,158 --> 00:03:11,189
-and this is where we can add our Terms
-essentially
+ и это, где мы можем добавить наши Условия по существу 
 
 56
 00:03:11,189 --> 00:03:15,949
-for the request for example if we go
-back to article slash create
+ для запроса, например, если мы вернемся к статье слэш создать 
 
 57
 00:03:15,949 --> 00:03:19,009
-we have a title abadi in a published at
+ у нас есть название Abadi в опубликованные на 
 
 58
 00:03:19,009 --> 00:03:22,859
-okay well we can reference those exact
-names
+ в порядке и мы можем ссылаться на эти точные имена 
 
 59
 00:03:22,860 --> 00:03:26,360
-title will be required next
+ Название потребуется следующая 
 
 60
 00:03:26,360 --> 00:03:30,120
-the body will be required as well and
-are published at
+ тело будет необходимо, а также и опубликованы на 
 
 61
 00:03:30,120 --> 00:03:33,610
-will be required as well but maybe
-there's
+ необходимо будет также, но, возможно, есть 
 
 62
 00:03:33,610 --> 00:03:38,040
-other things we need to do as well for
-example imagine you have a sign-up form
+ другие вещи, которые мы должны сделать, а также, например, представьте, что вы есть регистрационную форму 
 
 63
 00:03:38,039 --> 00:03:42,009
-and your email field should be required
-but it should also be
+ и адрес электронной почты поле должно обязательно, но он также должен быть 
 
 64
 00:03:42,009 --> 00:03:45,628
-other specific type it should look like
-an email address
+ другой специфический тип он должен выглядеть, как адрес электронной почты 
 
 65
 00:03:45,628 --> 00:03:50,280
-and then maybe your name is required but
-also it needs to be at least
+ и тогда, возможно, ваше имя требуется, но также она должна быть по крайней мере, 
 
 66
 00:03:50,280 --> 00:03:54,150
-two characters lock and if you want to
-see a full massive list of what you can
+ два символа блокировки, и если вы хотите, чтобы увидеть полный список массивный, что вы можете 
 
 67
 00:03:54,150 --> 00:03:54,650
-do
+ сделать 
 
 68
 00:03:54,650 --> 00:03:57,920
-go to learn how to calm slash stocks
-slash
+ пойти учиться, как успокоить запасы Slash Slash 
 
 69
 00:03:57,919 --> 00:04:01,158
-validation now what we had a couple more
+ проверка в настоящее время, что мы были еще пару 
 
 70
 00:04:01,158 --> 00:04:04,829
-we can either use the pipe here so I
-could say required
+ мы можем использовать либо трубку здесь, так что я мог бы сказать требуется 
 
 71
 00:04:04,830 --> 00:04:08,950
-and it should also be at that date tight
-some notice we use a pipe to separate
+ и она должна быть в тот же день плотно некоторые уведомления мы используем трубу, чтобы отделить 
 
 72
 00:04:08,949 --> 00:04:09,579
-them
+ их 
 
 73
 00:04:09,580 --> 00:04:13,390
-or if you prefer you can use a general
-array
+ или если вы предпочитаете вы можете использовать общий массив 
 
 74
 00:04:13,389 --> 00:04:16,599
-either one works let's just stick with
-the pipe for now
+ либо один работает, давайте просто придерживаться с трубой сейчас 
 
 75
 00:04:16,600 --> 00:04:21,169
-next for the title mostly just for fun
-will say it needs to happen minimum
+ Следующий за титул в основном только для забавы будет сказать, что это должно произойти минимум 
 
 76
 00:04:21,168 --> 00:04:21,649
-length
+ длина 
 
 77
 00:04:21,649 --> 00:04:23,349
-up three characters
+ до трех символов 
 
 78
 00:04:23,350 --> 00:04:26,200
-how about that well I can say men
+ как о том, что хорошо я могу сказать, люди 
 
 79
 00:04:26,199 --> 00:04:30,709
-Colin and then the minimum value think
-this has our argument
+ Колин и то минимальное значение думаю, что это имеет наш аргумент 
 
 80
 00:04:30,709 --> 00:04:34,879
-sonar case it should be at least 3
-characters so we can represent it like
+ эхолот случае он должен быть не менее 3 символов таким образом, мы можем представить это нравится 
 
 81
 00:04:34,879 --> 00:04:35,449
-that
+ что 
 
 82
 00:04:35,449 --> 00:04:38,829
-all rights and now we set up our
-authorization
+ Все права, и теперь мы создали наш авторизацию 
 
 83
 00:04:38,829 --> 00:04:43,599
-we've set up our validation rules let's
-switch back to our controller
+ мы создали наши правила валидации давайте перейдем к нашей контроллера 
 
 84
 00:04:43,600 --> 00:04:47,129
-and now all we're gonna do is ty painted
-right here
+ и теперь все, что мы собираемся сделать, это ти окрашены здесь 
 
 85
 00:04:47,129 --> 00:04:51,120
-create article request and we'll call it
+ создать запрос статью, и мы будем называть его 
 
 86
 00:04:51,120 --> 00:04:54,220
-request okay so we can leave it like
-this
+ запросить в порядке, поэтому мы можем оставить его, как это 
 
 87
 00:04:54,220 --> 00:04:58,390
-or we can import the class at the top in
-clean things up just a little bit
+ или мы можем импортировать класс на верху в чистых вещей от всего немного 
 
 88
 00:04:58,389 --> 00:05:02,089
-and then we will update our talk lock
-cool
+ и тогда мы будем обновлять наш разговор заблокировать круто 
 
 89
 00:05:02,089 --> 00:05:05,810
-so now here's a very important concept
-to understand
+ так что теперь вот очень важная концепция, чтобы понять 
 
 90
 00:05:05,810 --> 00:05:09,399
-when we type hence this former Qwest
-behind-the-scenes
+ при вводе, следовательно, этот бывший Qwest за кадром 
 
 91
 00:05:09,399 --> 00:05:13,469
-lagerfeld's going to pick up on the fact
-that we are dealing with validation here
+ Лагерфельд собирается забрать на том, что мы имеем дело с проверкой здесь 
 
 92
 00:05:13,470 --> 00:05:16,790
-and it will automatically trigger the
-validation
+ и он будет автоматически вызвать проверку 
 
 93
 00:05:16,790 --> 00:05:20,810
-before this method actually gets
-executed that's really important to
+ до этого метод на самом деле запускается на выполнение, что действительно важно, чтобы 
 
 94
 00:05:20,810 --> 00:05:21,610
-understand
+ понять 
 
 95
 00:05:21,610 --> 00:05:24,750
-so in translation what that means
+ так в переводе, что это значит 
 
 96
 00:05:24,750 --> 00:05:28,069
-is the body this method one never fire
+ этот метод один никогда не огонь тела 
 
 97
 00:05:28,069 --> 00:05:31,240
-we won't ever create an article unless
+ мы никогда не создать статью, если 
 
 98
 00:05:31,240 --> 00:05:35,910
-our validation past now what happens if
-it failed
+ наше прошлое проверка теперь, что произойдет, если он не 
 
 99
 00:05:35,910 --> 00:05:39,490
-well for example at the user doesn't
-enter anything in the title
+ ну например у пользователя ничего не ввести в названии 
 
 100
 00:05:39,490 --> 00:05:43,500
-the validation fails this method never
-gets fired
+ проверка не этот метод никогда не будет уволен 
 
 101
 00:05:43,500 --> 00:05:47,120
-and instead we actually redirect to the
-previous page
+ и вместо этого мы на самом деле перенаправить к предыдущей странице 
 
 102
 00:05:47,120 --> 00:05:51,459
-so that the user can try again okay so
-before we tried this on the browser
+ так что пользователь может попробовать снова в порядке поэтому, прежде чем мы попытались это в браузере 
 
 103
 00:05:51,459 --> 00:05:54,620
-let's go to the cycle once together the
-user
+ давайте идти в цикле один раз вместе пользователь 
 
 104
 00:05:54,620 --> 00:05:58,639
-comes to the create page: in the fill
-out the various fields in the form
+ приходит к странице создания: в заполнить различные поля в форме 
 
 105
 00:05:58,639 --> 00:06:02,620
-now when the form cements we prepare
+ Теперь, когда форма цементов мы готовим 
 
 106
 00:06:02,620 --> 00:06:07,009
-to trigger this method however lagerfeld
-picks up on the fact that we've tight
+ чтобы вызвать этот метод, однако Лагерфельд поднимает на то, что мы плотно 
 
 107
 00:06:07,009 --> 00:06:08,209
-end to this object
+ конец к этому объекту 
 
 108
 00:06:08,209 --> 00:06:11,299
-and it's going to do its best to give us
-that object
+ и он собирается сделать все возможное, чтобы дать нам этот объект 
 
 109
 00:06:11,300 --> 00:06:16,139
-however in the process it will detect
-that this object can be validated
+ Однако в процессе он обнаружит, что этот объект может быть подтверждено 
 
 110
 00:06:16,139 --> 00:06:19,500
-so it triggers that validation
-automatically for you
+ так это вызывает, что проверка для вас автоматически 
 
 111
 00:06:19,500 --> 00:06:23,139
-if validation passes it gives us a
-request object
+ если проверка проходит это дает нам объект запроса 
 
 112
 00:06:23,139 --> 00:06:27,228
-can we create the article however if
-validation passes
+ мы можем создать статью, однако если проверка проходит 
 
 113
 00:06:27,228 --> 00:06:30,349
-once again this method never triggers
+ снова этот метод никогда не вызывает 
 
 114
 00:06:30,350 --> 00:06:33,390
-and we instead redirect to the previous
-route
+ и мы вместо перенаправления к предыдущему маршруту 
 
 115
 00:06:33,389 --> 00:06:35,248
-so that the user can correct them
+ так что пользователь может исправить их 
 
 116
 00:06:35,249 --> 00:06:39,109
-stake from the form so now what I want
-you to notice
+ акций от формы, так что теперь то, что я хочу, чтобы вы заметили, 
 
 117
 00:06:39,108 --> 00:06:42,308
-is that with implemented validation
-without adding
+ является то, что с осуществляемой проверки без добавления 
 
 118
 00:06:42,309 --> 00:06:46,279
-a single line to this method body so I
-can remove that
+ одна строка для этого метода теле, так что я могу удалить, что 
 
 119
 00:06:46,278 --> 00:06:49,298
-next we are receiving the request
+ Следующий мы получаем запрос 
 
 120
 00:06:49,298 --> 00:06:53,328
-so we no longer need to use the facade I
-can just save request
+ таким образом, мы больше не нужно использовать фасад Я могу только сохранить запрос 
 
 121
 00:06:53,329 --> 00:06:57,629
-all and that would be equivalent which
-means at the top
+ Все и что было бы эквивалентно, что означает в верхней 
 
 122
 00:06:57,629 --> 00:07:01,449
-we can remove that import right there
-okay
+ мы можем удалить, что импорт тут в порядке 
 
 123
 00:07:01,449 --> 00:07:04,989
-very clean so why don't we try this out
-in the browser
+ очень чистый, так почему бы нам не попробовать это в браузере 
 
 124
 00:07:04,988 --> 00:07:07,149
-and see if it works
+ и посмотреть, если это работает 
 
 125
 00:07:07,149 --> 00:07:10,289
-we will they said article sash creates
-in this time
+ мы говорили они статья створки создает в это время 
 
 126
 00:07:10,290 --> 00:07:13,290
-we will enter thanks so answer entire
+ мы войдем спасибо так ответить цельные 
 
 127
 00:07:13,290 --> 00:07:16,390
-and the current eight is fine and the
-article
+ и ток восемь прекрасно и статьи 
 
 128
 00:07:16,389 --> 00:07:20,769
-and everything worked so no issues there
-but this time
+ и все работало так никакие проблемы там, но на этот раз 
 
 129
 00:07:20,769 --> 00:07:24,479
-we're gonna try to submit the form
-without feeling something and
+ мы собираемся попробовать представить форму, не чувствуя что-то и 
 
 130
 00:07:24,480 --> 00:07:27,480
-let's leave the body plank okay one now
+ давайте оставим тело доски ладно его сейчас 
 
 131
 00:07:27,480 --> 00:07:30,660
-I add article and take a look
+ Добавить статью и взглянуть 
 
 132
 00:07:30,660 --> 00:07:34,640
-we didn't get redirected back to that
-main page which is redirected
+ мы не становились перенаправлены обратно на этой главной странице, которая перенаправляется 
 
 133
 00:07:34,639 --> 00:07:37,729
-back to this form because the validation
-failed
+ вернуться к этой форме, потому что проверка не удалось 
 
 134
 00:07:37,730 --> 00:07:40,870
-so that's what I mean when I say is all
-sort of happens
+ так это то, что я имею в виду, когда говорю, это все происходит своего рода 
 
 135
 00:07:40,870 --> 00:07:45,300
-automatically which is cool but we do
-have one problem
+ автоматически, что это здорово, но у нас есть одна проблема 
 
 136
 00:07:45,300 --> 00:07:50,500
-if the user makes a mistake well we
-didn't notify them what went wrong
+ если пользователь делает ошибку и мы не уведомляет их, что пошло не так 
 
 137
 00:07:50,500 --> 00:07:54,250
-so they really have no clue and as you
-can imagine for a big form
+ так что они на самом деле понятия не имеют, и, как вы можете себе представить, для большой формы 
 
 138
 00:07:54,250 --> 00:07:57,720
-this is a problem we need to get them
-some feedback
+ это проблема, которую мы должны получить их обратную связь 
 
 139
 00:07:57,720 --> 00:08:01,700
-so what we fix that we can do that by
-returning
+ так, что мы фиксируем, что мы можем сделать, что, вернувшись 
 
 140
 00:08:01,699 --> 00:08:05,689
-to our view in 10 we display any
-validation errors
+ на наш взгляд в 10 мы показываем какие-либо ошибки проверки 
 
 141
 00:08:05,689 --> 00:08:10,639
-right below the form now here's the next
-important thing for you to understand
+ прямо под формой Теперь вот следующая важная вещь для вас, чтобы понять, 
 
 142
 00:08:10,639 --> 00:08:14,219
-your views were always have access to
-and errors
+ Ваше отношение всегда иметь доступ и ошибки 
 
 143
 00:08:14,220 --> 00:08:18,150
-variable so to demonstrate that if we
-would have our top
+ Переменная так, чтобы продемонстрировать, что если бы у нас нашу верхнюю 
 
 144
 00:08:18,149 --> 00:08:22,919
-errors list to see what would happen so
-we visit the page
+ список ошибок, чтобы увидеть, что произойдет, поэтому мы посетить страницу 
 
 145
 00:08:22,920 --> 00:08:27,000
-and right now you can see it's an ever
-back we didn't have to create that
+ и прямо сейчас вы можете видеть, что это когда-нибудь вернуться, мы не должны создавать что 
 
 146
 00:08:27,000 --> 00:08:27,689
-variable
+ переменная 
 
 147
 00:08:27,689 --> 00:08:31,189
-or pass it to the view it was
-automatically done Byler hell
+ или передать его мнению было сделано автоматически Байлер ад 
 
 148
 00:08:31,189 --> 00:08:35,229
-right now its empty because we have no
-validation errors
+ сейчас его пустым, потому что у нас нет никаких ошибок валидации 
 
 149
 00:08:35,229 --> 00:08:39,050
-but if we do run s now take a look
+ но если мы делаем запустить S теперь взглянем 
 
 150
 00:08:39,049 --> 00:08:43,149
-we ran the validation it failed it
-redirected back
+ мы запустили проверку его не удалось это перенаправлены обратно 
 
 151
 00:08:43,149 --> 00:08:46,769
-it populated the airbag and now you can
-see we have
+ это заполняется подушки безопасности, и теперь вы можете видеть, мы должны 
 
 152
 00:08:46,769 --> 00:08:50,169
-to areas here so here's what we can do
+ в районах, вот так вот то, что мы можем сделать, 
 
 153
 00:08:50,169 --> 00:08:54,309
-we could say if week have any errors
+ мы могли бы сказать, если есть какие-либо неделе ошибки 
 
 154
 00:08:54,309 --> 00:08:57,489
-this is nothing more than a helper
-method but let us know
+ это не что иное, как вспомогательный метод, но дайте нам знать 
 
 155
 00:08:57,490 --> 00:09:01,810
-if we have any errors so if we do and we
-landed at the bottom
+ если у нас есть какие-либо ошибки, так что если мы делаем, и мы приземлились на дне 
 
 156
 00:09:01,809 --> 00:09:06,309
-then we want to display them one that we
-use some bootstrap classes
+ Затем мы хотим отобразить их одну, что мы используем некоторые классы начальной загрузки 
 
 157
 00:09:06,309 --> 00:09:09,929
-alert an alert danger now
+ предупредить предупреждения опасности в настоящее время 
 
 158
 00:09:09,929 --> 00:09:13,149
-I can say if we have any errors then
-fort
+ Я могу сказать, если у нас есть какие-либо ошибки затем форт 
 
 159
 00:09:13,149 --> 00:09:16,129
-each error as error then
+ каждая ошибка как ошибка, то 
 
 160
 00:09:16,129 --> 00:09:20,460
-display ed with analysts item like so
-and then finally
+ просмотров ред с аналитиками пункта, как это и, наконец, 
 
 161
 00:09:20,460 --> 00:09:23,690
-and for each and we're done create the
-EC
+ и для каждого, и мы сделали создать ЕС 
 
 162
 00:09:23,690 --> 00:09:27,450
-so let's try this one more time we had
-no errors
+ так что давайте попробуем это еще раз у нас не было никаких ошибок 
 
 163
 00:09:27,450 --> 00:09:31,180
-so we display nothing but next we try to
-submit the form
+ таким образом, мы не отображать ничего, но в следующем мы пытаемся представить форму 
 
 164
 00:09:31,179 --> 00:09:34,649
-and we do have a risk so you see them
-listed here
+ и у нас есть риск, так что вы видите их, перечисленные здесь 
 
 165
 00:09:34,649 --> 00:09:38,569
-and it looks like our CSS it a little
-bit of but you get the basic idea
+ и это выглядит как наш CSS это немного, но вы получите общее представление 
 
 166
 00:09:38,570 --> 00:09:41,950
-the important thing is that the user has
-some feedback now
+ Важно то, что пользователь имеет обратную связь с компанией 
 
 167
 00:09:41,950 --> 00:09:45,530
-so maybe we fill out the title but we
-leave the body plank
+ так что, возможно, мы заполните титул, но мы оставим доску тела 
 
 168
 00:09:45,529 --> 00:09:50,259
-much at article now that works and
-notice how the messages are dynamic
+ много в статье теперь, работ и обратите внимание, как сообщения являются динамическими 
 
 169
 00:09:50,259 --> 00:09:54,389
-so let's say eight we fill up the body
-we fill out a title
+ так скажем восемь, мы пополнить организм мы заполняем название 
 
 170
 00:09:54,389 --> 00:09:58,889
-so we handled the required validation
-rule but we don't have enough characters
+ таким образом, мы справились с требуемой правило проверки, но мы не имеем достаточно символов 
 
 171
 00:09:58,889 --> 00:10:02,439
-remember we set a minimum length on now
-and we run it
+ помните, мы установили минимальную длину сейчас, и мы запустить его 
 
 172
 00:10:02,440 --> 00:10:05,820
-it will still fail in the message will
-be updated accordingly
+ он по-прежнему не сможет в сообщении будет обновляться соответственно 
 
 173
 00:10:05,820 --> 00:10:09,330
-so once again let's properly form and
+ так еще раз давайте правильно сформировать и 
 
 174
 00:10:09,330 --> 00:10:13,540
-this and we'll publish it today and
-after we add the article
+ это, и мы будем публиковать его сегодня и после того как мы добавить статью 
 
 175
 00:10:13,539 --> 00:10:17,329
-everything worked so validation decision
-that harden your cell
+ все работали так, что решение проверки затвердеть вашу клетку 
 
 176
 00:10:17,330 --> 00:10:20,460
-but let me show you one last thing to
-finish up the lesson
+ но позвольте мне показать вам одну вещь, чтобы закончить урок 
 
 177
 00:10:20,460 --> 00:10:23,780
-we talked about former quests which are
-pretty cool
+ мы говорили о бывших квесты, которые довольно прохладно 
 
 178
 00:10:23,779 --> 00:10:27,559
-they offer a nice clean dedicated place
-to put this stuff
+ они предлагают хороший чистый выделенный место для размещения этого материала 
 
 179
 00:10:27,559 --> 00:10:30,729
-however if you don't wanna bother
-creating a class
+ Однако, если вы не хотите беспокоить создания класса 
 
 180
 00:10:30,730 --> 00:10:34,139
-like I told you we can also call the
-Validate method
+ как я сказал вам, что мы можем также назвать метод проверки 
 
 181
 00:10:34,139 --> 00:10:37,470
-directly on the controller let me show
-you what this looks like
+ непосредственно на контроллере, позвольте мне показать вам, как это выглядит 
 
 182
 00:10:37,470 --> 00:10:41,279
-if we take a look at the parent class
-and notice that we
+ если мы взглянем на родительском классе и обратите внимание, что мы 
 
 183
 00:10:41,279 --> 00:10:45,779
-import this straight called validates
-request and specifically we have the
+ импортировать прямо под названием проверяет запрос и, в частности у нас есть 
 
 184
 00:10:45,779 --> 00:10:46,809
-Validate method
+ Метод Подтвердить 
 
 185
 00:10:46,809 --> 00:10:50,699
-where you give it your request you get
-your rules and it was essentially
+ где вы даете ему ваш запрос вы получите ваши правила, и это было по существу 
 
 186
 00:10:50,700 --> 00:10:51,370
-perform
+ выполнять 
 
 187
 00:10:51,370 --> 00:10:55,070
-in the exact same way so let's try this
-out
+ в том же пути, так давайте попробуем это из 
 
 188
 00:10:55,070 --> 00:10:58,340
-this time we come back here and now
+ на этот раз мы пришли сюда, и теперь 
 
 189
 00:10:58,340 --> 00:11:02,370
-when I can use create article request
-will just use where hells general
+ когда я могу использовать создать запрос статья будет просто использовать, где Hells целом 
 
 190
 00:11:02,370 --> 00:11:05,379
-request so let me import that at the top
+ Запрос так что позвольте мне импортировать, что на вершине 
 
 191
 00:11:05,379 --> 00:11:08,580
-eliminate HTTP request
+ устранить HTTP запрос 
 
 192
 00:11:08,580 --> 00:11:11,770
-we'll update our doc block and now
+ мы будем обновлять наш DOC блок и теперь 
 
 193
 00:11:11,769 --> 00:11:16,470
-we don't need a former Qwest we can just
-call validate directly on the controller
+ мы не должны бывшего Qwest мы можем просто позвонить проверки непосредственно на контроллере 
 
 194
 00:11:16,470 --> 00:11:20,250
-we give it the request this will give us
-the information
+ мы даем ему запрос это даст нам информацию 
 
 195
 00:11:20,250 --> 00:11:24,339
-at the user typed into the form and then
-we pass our validation rules
+ у пользователя, введенные в форму, а затем мы переходим наши правила валидации 
 
 196
 00:11:24,339 --> 00:11:27,230
-chest like we did before
+ грудь, как мы делали раньше 
 
 197
 00:11:27,230 --> 00:11:29,959
-right here so let's keep it very simple
+ здесь так давайте держать его очень просто 
 
 198
 00:11:29,958 --> 00:11:33,409
-title is required and body
+ Название требуется, и тело 
 
 199
 00:11:33,409 --> 00:11:36,019
-is required
+ требуется 
 
 200
 00:11:36,019 --> 00:11:39,278
-so like I said for basic stuff this is a
-nice way to go
+ так как я сказал, для основного материала это хороший способ, чтобы пойти 
 
 201
 00:11:39,278 --> 00:11:43,688
-it's quick and fast alright so now let's
-try this one out together
+ это быстро и быстро хорошо теперь давайте попробуем это один из вместе 
 
 202
 00:11:43,688 --> 00:11:47,259
-we will create a new article I'm gonna
-leave this plank
+ мы создадим новую статью я собираюсь покинуть этот доску 
 
 203
 00:11:47,259 --> 00:11:50,528
-in we should get the exact same thing
-and we do
+ в мы должны получить ту же самую вещь, и мы делаем 
 
 204
 00:11:50,528 --> 00:11:54,259
-so it's up to you to decide when each
-one is important
+ так что до вас, чтобы решить, когда каждый важно 
 
 205
 00:11:54,259 --> 00:11:58,389
-if you want you could always use upon
-request and never call that validate met
+ если вы хотите, вы не всегда можете использовать по запросу и никогда не называем это Подтвердить встретил 
 
 206
 00:11:58,389 --> 00:11:59,418
-another controller
+ другой контроллер 
 
 207
 00:11:59,418 --> 00:12:03,369
-some people would say it's not the
-controller's job to handle that election
+ некоторые люди говорят, что это не работа контроллера для обработки, что избрание 
 
 208
 00:12:03,369 --> 00:12:07,089
-really once again it just depends upon
-context
+ действительно снова это просто зависит от контекста 
 
 209
 00:12:07,089 --> 00:12:10,499
-what's cool though is you can make up
-your own mind on this
+ то, что это круто, хотя это вы можете сделать свой собственный ум на это 
 
 210
 00:12:10,499 --> 00:12:14,970
-so what we're going to do in this case
-since we already created eighty create
+ так, что мы собираемся делать в этом случае, так как мы уже создали восемьдесят создать 
 
 211
 00:12:14,970 --> 00:12:15,869
-former Qwest
+ Бывший Qwest 
 
 212
 00:12:15,869 --> 00:12:19,829
-min and do a few steps and bring it back
-to what we had before
+ мин и делать несколько шагов и вернуть его к тому, что у нас было раньше 
 
 213
 00:12:19,828 --> 00:12:23,969
-okay so that looks good good job in the
-next video
+ в порядке, так что хорошо выглядит хорошую работу в следующем видео 
 
 214
 00:12:23,970 --> 00:12:28,129
-let's return to our views and talk a
-little bit about partials
+ давайте вернемся к нашим взглядам и немного поговорим о частичных 
 
 215
 00:12:28,129 --> 00:12:30,889
-and how we can clean and dry up our code
+ и как мы можем очистить и высушить наш код 
 
