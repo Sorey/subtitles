@@ -1,5 +1,6 @@
 ﻿1
 00:00:00,390 --> 00:00:03,149
+okay we are ready to tackle validation
  Итак, мы готовы решать проверки 
 
 2
